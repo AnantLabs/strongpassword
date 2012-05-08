@@ -94,7 +94,7 @@
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.label1);
             this.Name = "FormProfileNew";
-            this.Text = "FormProfileNew";
+            this.Text = "New profile";
             ((System.ComponentModel.ISupportInitialize)(this.numericSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

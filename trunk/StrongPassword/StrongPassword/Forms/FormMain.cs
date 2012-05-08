@@ -27,7 +27,7 @@ namespace StrongPassword
             
             notifyIcon1.Icon = Icon;
 
-            queuedBackgroundWorker = new QueuedBackgroundWorker(text => textBoxStrong.Text = text);
+            queuedBackgroundWorker = new QueuedBackgroundWorker(UpdateStrongPassword);
 
             SetupProfiles();
 
@@ -42,6 +42,23 @@ namespace StrongPassword
 
             Location = new Point(Screen.PrimaryScreen.Bounds.Width - Bounds.Width - 20, 
                                  Screen.PrimaryScreen.Bounds.Height - Bounds.Height - 60);
+        }
+
+        private void UpdateStrongPassword(string value)
+        {
+            textBoxStrong.Text = value;
+
+            if (!string.IsNullOrEmpty(textBoxStrong.Text))
+            {
+                Clipboard.SetText(textBoxStrong.Text);
+                clearTimer.Interval = 60000;
+                clearTimer.Start();
+            }
+            else
+            {
+                Clipboard.Clear();
+                clearTimer.Stop();
+            }
         }
 
         //Check if settings exist or make user do settings and reload
@@ -117,14 +134,6 @@ namespace StrongPassword
 
             if (profile != null)
                 queuedBackgroundWorker.Add(textBoxWeak.Text, settingsPassword, profile.Size);
-
-            if (!string.IsNullOrEmpty(textBoxStrong.Text))
-                Clipboard.SetText(textBoxStrong.Text);
-            else
-                Clipboard.Clear();
-
-            clearTimer.Interval = 60000;
-            clearTimer.Start();
         }
 
         //Hide or Closes the main window depending on the sender
