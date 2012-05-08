@@ -194,12 +194,12 @@ namespace StrongPassword
                 return;
             }
 
-            using (new FormMasterKeyWord(forceCloseHandler))
+            using (FormMasterKeyWord formMasterKeyWord = new FormMasterKeyWord(forceCloseHandler))
             {
                 if (IsDisposed)
                     return;
 
-                ShowDialog(this);
+                formMasterKeyWord.ShowDialog();
             }
 
             LoadSettings();
